@@ -1,57 +1,67 @@
 import { Link } from "react-router-dom";
 import { useGetAllMoviesQuery } from "../../redux/api/movies";
+import Skeleton from "../../components/common/Skelton";
+import ErrorState from "../../components/common/ErrorState";
 
 const AdminMoviesList = () => {
-  const { data: movies } = useGetAllMoviesQuery();
+  const { data: movies, isLoading, error } = useGetAllMoviesQuery();
 
   return (
-    <div className="container mx-[9rem]">
-      <div className="flex flex-col md:flex-row">
-        <div className="p-3">
-          <div className="ml-[2rem] text-xl font-bold h-12">
-            All Movies ({movies?.length})
-          </div>
+    <div className="bg-gray-800 min-h-screen text-white pt-20">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold">Manage Movies</h1>
+          <p className="text-gray-400 mt-2">
+            Total Movies: {isLoading ? "Loading..." : movies?.length || 0}
+          </p>
+        </div>
 
-          <div className="flex flex-wrap justify-around items-center p-[2rem]">
-            {movies?.map((movie) => (
-              <Link
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {isLoading ? (
+            Array.from({ length: 8 }).map((_, index) => (
+              <Skeleton key={index} variant="card" className="h-80" />
+            ))
+          ) : error ? (
+            <div className="col-span-full">
+              <ErrorState
+                title="Failed to load movies"
+                message="We couldn't fetch the movies list. Please try again."
+                onRetry={() => window.location.reload()}
+              />
+            </div>
+          ) : movies?.length > 0 ? (
+            movies.map((movie) => (
+              <div
                 key={movie._id}
-                to={`/admin/movies/update/${movie._id}`}
-                className="block mb-4 overflow-hidden"
+                className="bg-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="flex">
-                  <div
-                    key={movie._id}
-                    className="max-w-sm  m-[2rem] rounded overflow-hidden shadow-lg"
+                <img
+                  src={movie.image}
+                  alt={movie.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-2 line-clamp-2">{movie.name}</h3>
+                  <p className="text-gray-300 text-sm mb-4 line-clamp-3">{movie.detail}</p>
+                  <Link
+                    to={`/admin/movies/update/${movie._id}`}
+                    className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
                   >
-                    <img
-                      src={movie.image}
-                      alt={movie.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="px-6 py-4 border border-gray-400">
-                      <div className="font-bold text-xl mb-2">{movie.name}</div>
-                    </div>
-
-                    <p className="text-gray-700 text-base">{movie.detail}</p>
-
-                    <div className="mt-[2rem] mb-[1rem]">
-                      <Link
-                        to={`/admin/movies/update/${movie._id}`}
-                        className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Update Movie
-                      </Link>
-                    </div>
-                  </div>
+                    Update Movie
+                  </Link>
                 </div>
-              </Link>
-            ))}
-          </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-400 text-lg">No movies found.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
+       
 
 export default AdminMoviesList;

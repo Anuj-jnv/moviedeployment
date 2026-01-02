@@ -8,18 +8,22 @@ import {
 import MovieCard from "./MovieCard";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import banner from "../../assests/banner1.jpg";
+import { useSearchParams } from "react-router-dom";
+import banner from "/assests/banner1.jpg";
 import {
   setMoviesFilter,
   setFilteredMovies,
   setMovieYears,
   setUniqueYears,
 } from "../../redux/features/movies/moviesSlice";
+import Skeleton from "../../components/common/Skelton";
+import ErrorState from "../../components/common/ErrorState";
 
 const AllMovies = () => {
   const dispatch = useDispatch();
-  const { data } = useGetAllMoviesQuery();
-  const { data: genres } = useFetchGenresQuery();
+  const [searchParams] = useSearchParams();
+  const { data, isLoading, error } = useGetAllMoviesQuery();
+  const { data: genres, isLoading: genresLoading } = useFetchGenresQuery();
   const { data: newMovies } = useGetNewMoviesQuery();
   const { data: topMovies } = useGetTopMoviesQuery();
   const { data: randomMovies } = useGetRandomMoviesQuery();
@@ -33,7 +37,12 @@ const AllMovies = () => {
     dispatch(setFilteredMovies(data || []));
     dispatch(setMovieYears(movieYears));
     dispatch(setUniqueYears(uniqueYears));
-  }, [data, dispatch]);
+    
+    const searchQuery = searchParams.get('search');
+    if (searchQuery) {
+      dispatch(setMoviesFilter({ searchTerm: searchQuery }));
+    }
+  }, [data, dispatch, searchParams]);
 
   const handleSearchChange = (e) => {
     dispatch(setMoviesFilter({ searchTerm: e.target.value }));
@@ -74,78 +83,90 @@ const AllMovies = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 -translate-y-[5rem]">
-      <>
-        <section>
-          <div
-            className="relative h-[50rem] w-screen mb-10 flex items-center justify-center bg-cover"
-            style={{ backgroundImage: `url(${banner})` }}
+    <div className="bg-gray-800 min-h-screen text-white">
+      <section className="relative h-96 md:h-[50rem] w-full mb-10 flex items-center justify-center bg-cover" style={{ backgroundImage: `url(${banner})`, backgroundPosition: '50% center' }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-black opacity-60"></div>
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold mb-4">The Movies Hub</h1>
+          <p className="text-lg md:text-xl lg:text-2xl">Cinematic Odyssey: Unveiling the Magic of Movies</p>
+        </div>
+      </section>
+
+      <section className="px-4 py-8 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <input
+            type="text"
+            className="flex-1 h-12 px-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            placeholder="Search Movie"
+            value={moviesFilter.searchTerm}
+            onChange={handleSearchChange}
+          />
+          <select
+            className="h-12 px-4 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-50"
+            value={moviesFilter.selectedGenre}
+            onChange={(e) => handleGenreClick(e.target.value)}
+            disabled={genresLoading}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-black opacity-60"></div>
-
-            <div className="relative z-10 text-center text-white mt-[10rem]">
-              <h1 className="text-8xl font-bold mb-4">The Movies Hub</h1>
-              <p className="text-2xl">
-                Cinematic Odyssey: Unveiling the Magic of Movies
-              </p>
-            </div>
-
-            <section className="absolute -bottom-[5rem]">
-              <input
-                type="text"
-                className="w-[100%] h-[5rem] border px-10 outline-none rounded"
-                placeholder="Search Movie"
-                value={moviesFilter.searchTerm}
-                onChange={handleSearchChange}
-              />
-              <section className="sorts-container mt-[2rem] ml-[10rem]  w-[30rem]">
-                <select
-                  className="border p-2 rounded text-black"
-                  value={moviesFilter.selectedGenre}
-                  onChange={(e) => handleGenreClick(e.target.value)}
-                >
-                  <option value="">Genres</option>
-                  {genres?.map((genre) => (
-                    <option key={genre._id} value={genre._id}>
-                      {genre.name}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  className="border p-2 rounded ml-4 text-black"
-                  value={moviesFilter.selectedYear}
-                  onChange={(e) => handleYearChange(e.target.value)}
-                >
-                  <option value="">Year</option>
-                  {uniqueYears.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  className="border p-2 rounded ml-4 text-black"
-                  value={moviesFilter.selectedSort}
-                  onChange={(e) => handleSortChange(e.target.value)}
-                >
-                  <option value="">Sort By</option>
-                  <option value="new">New Movies</option>
-                  <option value="top">Top Movies</option>
-                  <option value="random">Random Movies</option>
-                </select>
-              </section>
-            </section>
-          </div>
-
-          <section className="mt-[10rem] w-screen flex justify-center items-center flex-wrap">
-            {filteredMovies?.map((movie) => (
-              <MovieCard key={movie._id} movie={movie} />
+            <option value="" className="bg-gray-700">
+              {genresLoading ? "Loading..." : "Genres"}
+            </option>
+            {genres?.map((genre) => (
+              <option key={genre._id} value={genre._id} className="bg-gray-700">
+                {genre.name}
+              </option>
             ))}
-          </section>
+          </select>
+          <select
+            className="h-12 px-4 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+            value={moviesFilter.selectedYear}
+            onChange={(e) => handleYearChange(e.target.value)}
+          >
+            <option value="" className="bg-gray-700">Year</option>
+            {uniqueYears.map((year) => (
+              <option key={year} value={year} className="bg-gray-700">
+                {year}
+              </option>
+            ))}
+          </select>
+          <select
+            className="h-12 px-4 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+            value={moviesFilter.selectedSort}
+            onChange={(e) => handleSortChange(e.target.value)}
+          >
+            <option value="" className="bg-gray-700">Sort By</option>
+            <option value="new" className="bg-gray-700">New Movies</option>
+            <option value="top" className="bg-gray-700">Top Movies</option>
+            <option value="random" className="bg-gray-700">Random Movies</option>
+          </select>
+        </div>
+
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+          {isLoading ? (
+            // Loading skeletons
+            Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="w-full max-w-sm">
+                <Skeleton variant="card" className="h-96" />
+              </div>
+            ))
+          ) : error ? (
+            <div className="col-span-full">
+              <ErrorState
+                title="Failed to load movies"
+                message="We couldn't fetch the movies. Please check your connection and try again."
+                onRetry={() => window.location.reload()}
+              />
+            </div>
+          ) : filteredMovies?.length > 0 ? (
+            filteredMovies.map((movie) => (
+              <MovieCard key={movie._id} movie={movie} />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-400 text-lg">No movies found matching your criteria.</p>
+            </div>
+          )}
         </section>
-      </>
+      </section>
     </div>
   );
 };

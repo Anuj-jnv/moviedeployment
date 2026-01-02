@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  background: #0f0f10;
-  color: #fff;
+  @apply bg-[#020617] text-gray-200;
+  overflow-x: hidden;
+  
 }
+
+.card {
+  @apply bg-[#0F172A] rounded-xl shadow-lg;
+}
+
 
 input,
 textarea {
@@ -15,3 +22,4 @@ textarea {
 select option {
   color: black;
 }
+

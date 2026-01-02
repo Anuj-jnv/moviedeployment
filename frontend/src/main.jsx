@@ -18,7 +18,7 @@ import PrivateRoute from "./pages/Auth/PrivateRoute.jsx";
 
 
 import Home from "./pages/Home.jsx";
-import Profile from "./pages/User/Profile.jsx";
+import Profile from "./pages/Profile/ProfilePage.jsx";
 import AdminMoviesList from "./pages/Admin/AdminMoviesList.jsx";
 import UpdateMovie from "./pages/Admin/UpdateMovie.jsx";
 import CreateMovie from "./pages/Admin/CreateMovie.jsx";
@@ -26,6 +26,7 @@ import AllMovies from "./pages/Movies/AllMovies.jsx";
 import MovieDetails from "./pages/Movies/MovieDetails.jsx";
 import AllComments from "./pages/Admin/AllComments.jsx";
 import AdminDashboard from "./pages/Admin/Dashboard/AdminDashboard.jsx";
+import AdminManagement from "./pages/Admin/AdminManagement.jsx";
 
 
 const router = createBrowserRouter(
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
         <Route path="/admin/movies-list" element={<AdminMoviesList />} />
         <Route path="/admin/movies/update/:id" element={<UpdateMovie />} />
         <Route path="/admin/movies/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/movies/manage" element={<AdminManagement />} />
         <Route path="/admin/movies/comments" element={<AllComments />} />
       </Route>
     </Route>

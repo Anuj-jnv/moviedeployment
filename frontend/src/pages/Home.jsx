@@ -1,16 +1,3 @@
-import{ Header} from "./Movies/Header.jsx";
-import MoviesContainerPage from "./Movies/MoviesContainerPage.jsx";
-
-const Home = () => {
-  return (
-    <>
-      <Header />
-
-      <section className="mt-[10rem]">
-        <MoviesContainerPage />
-      </section>
-    </>
-  );
-};
+import Home from "./Home/index.jsx";
 
 export default Home;

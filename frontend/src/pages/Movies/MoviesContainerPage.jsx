@@ -6,7 +6,7 @@ import {
 } from "../../redux/api/movies";
 
 import { useFetchGenresQuery } from "../../redux/api/genre";
-import SliderUtil from "../../component/SliderUtil";
+import SliderUtil from "../../components/SliderUtil";
 
 const MoviesContainerPage = () => {
   const { data } = useGetNewMoviesQuery();
@@ -25,37 +25,44 @@ const MoviesContainerPage = () => {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-between items-center">
-      <nav className=" ml-[4rem] flex flex-row xl:flex-col lg:flex-col md:flex-row sm:flex-row">
-        {genres?.map((g) => (
-          <button
-            key={g._id}
-            className={`transition duration-300 ease-in-out hover:bg-gray-200 block p-2 rounded mb-[1rem] text-lg ${
-              selectedGenre === g._id ? "bg-gray-200" : ""
-            }`}
-            onClick={() => handleGenreClick(g._id)}
-          >
-            {g.name}
-          </button>
-        ))}
-      </nav>
+    <div className="bg-gray-800 min-h-screen text-white py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex flex-col lg:flex-row lg:justify-between items-start">
+          <nav className="mb-8 lg:mb-0 lg:mr-8">
+            <h2 className="text-2xl font-bold mb-4">Genres</h2>
+            <div className="flex flex-wrap gap-2">
+              {genres?.map((g) => (
+                <button
+                  key={g._id}
+                  className={`transition duration-300 ease-in-out hover:bg-gray-700 bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium ${
+                    selectedGenre === g._id ? "bg-teal-600" : ""
+                  }`}
+                  onClick={() => handleGenreClick(g._id)}
+                >
+                  {g.name}
+                </button>
+              ))}
+            </div>
+          </nav>
 
-      <section className="flex flex-col justify-center items-center w-full lg:w-auto">
-        <div className="w-full lg:w-[100rem] mb-8 ">
-          <h1 className="mb-5">CHOOSE FOR YOU</h1>
-          <SliderUtil data={randomMovies} />
-        </div>
+          <section className="flex-1">
+            <div className="mb-12">
+              <h1 className="text-3xl font-bold mb-6 text-center lg:text-left">Choose for You</h1>
+              <SliderUtil data={randomMovies} />
+            </div>
 
-        <div className="w-full lg:w-[100rem] mb-8">
-          <h1 className="mb-5">TOP MOVIES</h1>
-          <SliderUtil data={topMovies} />
-        </div>
+            <div className="mb-12">
+              <h1 className="text-3xl font-bold mb-6 text-center lg:text-left">Top Movies</h1>
+              <SliderUtil data={topMovies} />
+            </div>
 
-        <div className="w-full lg:w-[100rem] mb-8">
-          <h1 className="mb-5">CHOOSE MOVIES</h1>
-          <SliderUtil data={filteredMovies} />
+            <div className="mb-12">
+              <h1 className="text-3xl font-bold mb-6 text-center lg:text-left">Choose Movies</h1>
+              <SliderUtil data={filteredMovies} />
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import SliderUtil from "../../component/SliderUtil";
+import SliderUtil from "../../components/SliderUtil";
 import { useGetNewMoviesQuery } from "../../redux/api/movies";
 import { Link } from "react-router-dom";
 
@@ -6,24 +6,30 @@ const Header = () => {
   const { data } = useGetNewMoviesQuery();
 
   return (
-    <div className="flex flex-col mt-[2rem] ml-[2rem] md:flex-row justify-between items-center md:items-start">
-      <nav className="w-full md:w-[10rem] ml-0 md:ml-2 mb-4 md:mb-0">
-        <Link
-          to="/"
-          className="transition duration-300 ease-in-out hover:bg-teal-200  block p-2 rounded mb-1 md:mb-2 text-lg"
-        >
-          Home
-        </Link>
-        <Link
-          to="/movies"
-          className="transition duration-300 ease-in-out hover:bg-teal-200  block p-2 rounded mb-1 md:mb-2 text-lg"
-        >
-          Browse Movies
-        </Link>
-      </nav>
+    <div className="bg-gray-800 py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+          <nav className="w-full md:w-auto">
+            <div className="flex flex-col space-y-2">
+              <Link
+                to="/"
+                className="bg-gray-700 hover:bg-gray-600 text-white transition duration-300 ease-in-out block px-4 py-2 rounded-lg text-lg font-medium text-center"
+              >
+                Home
+              </Link>
+              <Link
+                to="/movies"
+                className="bg-gray-700 hover:bg-gray-600 text-white transition duration-300 ease-in-out block px-4 py-2 rounded-lg text-lg font-medium text-center"
+              >
+                Browse Movies
+              </Link>
+            </div>
+          </nav>
 
-      <div className="w-full md:w-[80%] mr-0 md:mr-2">
-        <SliderUtil data={data} />
+          <div className="w-full md:flex-1">
+            <SliderUtil data={data} />
+          </div>
+        </div>
       </div>
     </div>
   );
