@@ -42,15 +42,33 @@ const UpdateMovie = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setMovieData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (name === "cast") {
+      setMovieData((prevData) => ({
+        ...prevData,
+        cast: value.split(",").map((item) => item.trim()),
+      }));
+    } else {
+      setMovieData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleUpdateMovie();
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this movie?")) {
+      handleDeleteMovie();
+    }
   };
 
   const handleUpdateMovie = async () => {
@@ -166,7 +184,7 @@ const UpdateMovie = () => {
                 type="text"
                 name="cast"
                 value={movieData.cast?.join(", ") || ""}
-                onChange={handleCastChange}
+                onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Actor 1, Actor 2, Actor 3"
               />

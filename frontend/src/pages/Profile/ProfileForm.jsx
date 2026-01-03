@@ -42,38 +42,40 @@ const ProfileForm = () => {
       }).unwrap();
 
       dispatch(setCredentials(res));
-
       setPassword("");
       setConfirmPassword("");
       setSuccess(true);
+      toast.success("Profile updated");
 
-      toast.success("Profile updated successfully");
-
-      setTimeout(() => setSuccess(false), 1800);
+      setTimeout(() => setSuccess(false), 1500);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
   return (
-    <div className="bg-[#0F172A] border border-[#1E293B] rounded-2xl p-5">
-      {/* HEADER */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-white">
-          Update Profile
+    <div className="
+      bg-[#0F172A]
+      border border-[#1E293B]
+      rounded-xl
+      p-5
+    ">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-base font-semibold text-white">
+          Account Details
         </h2>
 
-        {/* SUCCESS ANIMATION */}
         <AnimatePresence>
           {success && (
-            <motion.div
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.6, opacity: 0 }}
-              className="flex items-center gap-1 text-teal-400 text-sm font-medium"
+            <motion.span
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              className="text-xs font-medium text-teal-400"
             >
-              ✓ Saved
-            </motion.div>
+              Saved
+            </motion.span>
           )}
         </AnimatePresence>
       </div>
@@ -89,10 +91,14 @@ const ProfileForm = () => {
           </label>
           <input
             type="text"
-            className="w-full rounded-md bg-[#020617]
-                       border border-[#1E293B]
-                       px-3 py-2 text-sm text-white
-                       focus:outline-none focus:border-teal-500"
+            className="
+              w-full rounded-md
+              bg-[#020617]
+              border border-[#1E293B]
+              px-3 py-2
+              text-sm text-white
+              focus:outline-none focus:border-teal-500
+            "
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -105,10 +111,14 @@ const ProfileForm = () => {
           </label>
           <input
             type="email"
-            className="w-full rounded-md bg-[#020617]
-                       border border-[#1E293B]
-                       px-3 py-2 text-sm text-white
-                       focus:outline-none focus:border-teal-500"
+            className="
+              w-full rounded-md
+              bg-[#020617]
+              border border-[#1E293B]
+              px-3 py-2
+              text-sm text-white
+              focus:outline-none focus:border-teal-500
+            "
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -122,10 +132,14 @@ const ProfileForm = () => {
           <input
             type="password"
             placeholder="Leave blank to keep current password"
-            className="w-full rounded-md bg-[#020617]
-                       border border-[#1E293B]
-                       px-3 py-2 text-sm text-white
-                       focus:outline-none focus:border-teal-500"
+            className="
+              w-full rounded-md
+              bg-[#020617]
+              border border-[#1E293B]
+              px-3 py-2
+              text-sm text-white
+              focus:outline-none focus:border-teal-500
+            "
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -138,27 +152,36 @@ const ProfileForm = () => {
           </label>
           <input
             type="password"
-            className="w-full rounded-md bg-[#020617]
-                       border border-[#1E293B]
-                       px-3 py-2 text-sm text-white
-                       focus:outline-none focus:border-teal-500"
+            className="
+              w-full rounded-md
+              bg-[#020617]
+              border border-[#1E293B]
+              px-3 py-2
+              text-sm text-white
+              focus:outline-none focus:border-teal-500
+            "
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
 
-        {/* ACTION ROW */}
-        <div className="md:col-span-2 flex items-center justify-end gap-3 mt-2">
+        {/* Actions */}
+        <div className="md:col-span-2 flex items-center justify-end gap-3 pt-2">
           {isLoading && <Loader />}
           <button
             type="submit"
             disabled={isLoading}
-            className={`px-5 py-2 rounded-md text-sm font-medium
-              ${
-                isLoading
-                  ? "bg-teal-500/50 cursor-not-allowed"
-                  : "bg-teal-500 hover:bg-teal-600"
-              } text-white transition`}
+            className="
+              px-4 py-2
+              rounded-md
+              text-sm font-medium
+              text-white
+              bg-teal-500
+              hover:bg-teal-600
+              disabled:opacity-60
+              disabled:cursor-not-allowed
+              transition
+            "
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </button>

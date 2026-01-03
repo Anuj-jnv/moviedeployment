@@ -48,11 +48,14 @@ const CreateMovie = () => {
     const { name, value } = e.target;
 
     if (name === "genre") {
-      const selectedGenre = genres.find((genre) => genre.name === value);
-
       setMovieData((prevData) => ({
         ...prevData,
-        genre: selectedGenre ? selectedGenre._id : "",
+        genre: value,
+      }));
+    } else if (name === "cast") {
+      setMovieData((prevData) => ({
+        ...prevData,
+        cast: value.split(",").map((item) => item.trim()),
       }));
     } else {
       setMovieData((prevData) => ({
@@ -65,6 +68,11 @@ const CreateMovie = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleCreateMovie();
   };
 
   const handleCreateMovie = async () => {
@@ -181,7 +189,7 @@ const CreateMovie = () => {
                   type="text"
                   name="cast"
                   value={movieData.cast.join(", ")}
-                  onChange={handleCastChange}
+                  onChange={handleChange}
                   className="mt-1 block w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Actor 1, Actor 2, Actor 3"
                 />

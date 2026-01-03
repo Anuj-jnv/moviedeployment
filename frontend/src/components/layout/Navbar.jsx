@@ -116,21 +116,20 @@ const Navbar = () => {
               MovieHub
             </Link>
 
-            {/* SEARCH - REMOVED */}
-
             {/* LINKS (DESKTOP) */}
             <div className="hidden md:flex gap-6">
               {!isAdmin && (
-                <>
+                <div className="flex flex-row items-center justify-between gap-8">
                   <NavItem to="/">Home</NavItem>
                   <NavItem to="/movies">Movies</NavItem>
-                </>
+                </div>
               )}
               {isAdmin && (
-                <>
-                  
+                <div className="flex flex-row items-center justify-between gap-10">
+                  <NavItem to="/">Home</NavItem>
+                  <NavItem to="/movies">Movies</NavItem>
                   <NavItem to="/admin/movies/dashboard">Dashboard</NavItem>
-                </>
+                </div>
               )}
             </div>
 
@@ -140,9 +139,15 @@ const Navbar = () => {
                 <div ref={profileRef} className="relative hidden md:block">
                   <button
                     onClick={() => setProfileOpen((p) => !p)}
-                    className="flex items-center gap-2 px-4 py-1.5 rounded-full
-                               bg-[#0F172A] border border-[#1E293B]
-                               hover:border-teal-400 transition"
+                    className="flex items-center justify-center gap-2
+                               px-5 py-2
+                               rounded-full
+                               bg-gradient-to-br from-[#0F172A] to-[#020617]
+                               border border-[#1E293B]
+                               text-sm font-medium text-slate-200 shadow-sm hover:border-teal-400 hover:text-teal-300
+                               hover:shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500/40
+                               transition-all duration-200 ease-out"
+
                   >
                     <div className="h-8 w-8 rounded-full bg-teal-500 flex items-center justify-center text-sm font-bold">
                       {initials}
@@ -157,32 +162,42 @@ const Navbar = () => {
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        className="absolute right-0 mt-2 w-44 rounded-xl
-                                   bg-[#0F172A] border border-[#1E293B]
-                                   shadow-xl overflow-hidden"
+                        className="absolute right-0 mt-2 w-full
+      rounded-lg
+      bg-[#0F172A]
+      border border-[#1E293B]
+      shadow-lg
+      overflow-hidden
+    "
                       >
                         <NavLink
                           to="/profile"
-                          className="block px-4 py-2 text-sm text-gray-300 hover:bg-[#020617]"
+                          className="block
+        px-3 py-2
+        text-sm text-slate-300
+        hover:bg-[#020617]
+        transition-colors
+      "
                         >
                           Profile
                         </NavLink>
-                        {isAdmin && (
-                          <NavLink
-                            to="/admin/movies/dashboard"
-                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-[#020617]"
-                          >
-                            Admin Dashboard
-                          </NavLink>
-                        )}
+
                         <button
                           onClick={logoutHandler}
-                          className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-[#020617]"
+                          className="
+        w-full text-left
+        px-3 py-2
+        text-sm text-red-400
+        hover:bg-[#020617]
+        transition-colors
+      "
                         >
                           Logout
                         </button>
                       </motion.div>
                     )}
+
+
                   </AnimatePresence>
                 </div>
               ) : (
@@ -209,19 +224,20 @@ const Navbar = () => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="md:hidden bg-[#0F172A] border-t border-[#1E293B] px-6 py-4 space-y-4"
+                className="md:hidden bg-[#0F172A] border-t border-[#1E293B] px-8 py-4 space-y-4"
               >
                 {!isAdmin && (
-                  <>
+                  <div className="flex flex-row mx-12 items-center justify-between gap-4">
                     <NavItem to="/" onClick={() => setMenuOpen(false)}>Home</NavItem>
                     <NavItem to="/movies" onClick={() => setMenuOpen(false)}>Movies</NavItem>
-                  </>
+                  </div>
                 )}
                 {isAdmin && (
-                  <>
-                    <NavItem to="/admin/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</NavItem>
-                    <NavItem to="/admin/movies" onClick={() => setMenuOpen(false)}>Manage Movies</NavItem>
-                  </>
+                  <div className="flex flex-row mx-4 items-center justify-between gap-4">
+                    <NavItem to="/" onClick={() => setMenuOpen(false)}>Home</NavItem>
+                    <NavItem to="/movies" onClick={() => setMenuOpen(false)}>Movies</NavItem>
+                    <NavItem to="/admin/movies/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</NavItem>
+                  </div>
                 )}
 
                 {userInfo ? (

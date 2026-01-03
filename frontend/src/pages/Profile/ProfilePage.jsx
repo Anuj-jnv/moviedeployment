@@ -6,6 +6,7 @@ const ProfilePage = () => {
   return (
     <div className="pt-20 pb-12 min-h-screen bg-[#020617]">
       <ProfileLayout>
+        
         <ProfileCard />
         <ProfileForm />
       </ProfileLayout>

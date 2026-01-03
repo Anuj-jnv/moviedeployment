@@ -44,42 +44,50 @@ const AllMovies = () => {
     }
   }, [data, dispatch, searchParams]);
 
+  const applyFilters = (overrides = {}) => {
+    const filters = { ...moviesFilter, ...overrides };
+    let base = data || [];
+
+    if (filters.selectedSort === "new") base = newMovies || [];
+    if (filters.selectedSort === "top") base = topMovies || [];
+    if (filters.selectedSort === "random") base = randomMovies || [];
+
+    let result = base.filter((movie) => {
+      if (filters.searchTerm) {
+        if (!movie.name.toLowerCase().includes(filters.searchTerm.toLowerCase()))
+          return false;
+      }
+      if (filters.selectedGenre) {
+        if (movie.genre !== filters.selectedGenre) return false;
+      }
+      if (filters.selectedYear) {
+        if (movie.year !== +filters.selectedYear) return false;
+      }
+      return true;
+    });
+
+    dispatch(setFilteredMovies(result));
+  };
+
   const handleSearchChange = (e) => {
-    dispatch(setMoviesFilter({ searchTerm: e.target.value }));
-
-    const filteredMovies = data.filter((movie) =>
-      movie.name.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-
-    dispatch(setFilteredMovies(filteredMovies));
+    const value = e.target.value;
+    dispatch(setMoviesFilter({ searchTerm: value }));
+    applyFilters({ searchTerm: value });
   };
 
   const handleGenreClick = (genreId) => {
-    const filterByGenre = data.filter((movie) => movie.genre === genreId);
-    dispatch(setFilteredMovies(filterByGenre));
+    dispatch(setMoviesFilter({ selectedGenre: genreId }));
+    applyFilters({ selectedGenre: genreId });
   };
 
   const handleYearChange = (year) => {
-    const filterByYear = data.filter((movie) => movie.year === +year);
-    dispatch(setFilteredMovies(filterByYear));
+    dispatch(setMoviesFilter({ selectedYear: year }));
+    applyFilters({ selectedYear: year });
   };
 
   const handleSortChange = (sortOption) => {
-    switch (sortOption) {
-      case "new":
-        dispatch(setFilteredMovies(newMovies));
-        break;
-      case "top":
-        dispatch(setFilteredMovies(topMovies));
-        break;
-      case "random":
-        dispatch(setFilteredMovies(randomMovies));
-        break;
-
-      default:
-        dispatch(setFilteredMovies([]));
-        break;
-    }
+    dispatch(setMoviesFilter({ selectedSort: sortOption }));
+    applyFilters({ selectedSort: sortOption });
   };
 
   return (

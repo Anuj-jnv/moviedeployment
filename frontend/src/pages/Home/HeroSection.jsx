@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HeroSection = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  
   return (
     <section className="relative bg-gray-800 text-white py-20 px-4">
       <div className="max-w-7xl mx-auto text-center">
@@ -18,12 +21,14 @@ const HeroSection = () => {
           >
             Browse Movies
           </Link>
-          <Link
-            to="/register"
-            className="bg-transparent border-2 border-teal-500 hover:bg-teal-500 text-teal-500 hover:text-white font-semibold py-3 px-8 rounded-lg transition duration-300 ease-in-out"
-          >
-            Join Now
-          </Link>
+          {!userInfo && (
+            <Link
+              to="/register"
+              className="bg-transparent border-2 border-teal-500 hover:bg-teal-500 text-teal-500 hover:text-white font-semibold py-3 px-8 rounded-lg transition duration-300 ease-in-out"
+            >
+              Join Now
+            </Link>
+          )}
         </div>
       </div>
     </section>

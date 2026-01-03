@@ -1,9 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const MovieCard = ({ movie }) => {
+  const location = useLocation();
+
+  const from = location.pathname + location.search;
   return (
     <div key={movie._id} className="relative group m-2 md:m-4">
-      <Link to={`/movies/${movie._id}`}>
+      <Link to={`/movies/${movie._id}`}
+      state={{ from }}
+      className="block cursor-pointer"
+      >
         <img
           src={movie.image}
           alt={movie.name}

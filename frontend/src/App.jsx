@@ -9,7 +9,19 @@ import Layout from "./components/layout/Layout";
 const App = () => {
   return (
     <Layout>
-      <ToastContainer position="top-right" autoClose={3000} />
+      {/* Global Toast Container (ONLY ONCE) */}
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="dark"
+        toastClassName="bg-gray-900 text-white border border-gray-700 rounded-lg"
+        bodyClassName="text-sm font-medium"
+        progressClassName="bg-teal-500"
+      />
 
       <Navbar />
 

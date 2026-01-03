@@ -32,16 +32,24 @@ const Login = () => {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigate(redirect);
+      
+      toast.success("Logged in successfully!");
+  
+
+      setTimeout(() => {
+        navigate(redirect);
+      }, 300);
+
+
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
   return (
-   
-      <div
-  className="relative flex-grow
+
+    <div
+      className="relative flex-grow
              flex items-start justify-center
              pt-28 pb-10
              bg-cover bg-center"
