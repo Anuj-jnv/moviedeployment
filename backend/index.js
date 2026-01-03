@@ -23,6 +23,11 @@ const allowedOrigins = [
   process.env.Frontend_URL || "https://movieappps.netlify.app",
 ];
 
+app.use((req, res, next) => {
+  console.log("Incoming Origin:", req.headers.origin);
+  next();
+});
+
 
 app.use(
   cors({
