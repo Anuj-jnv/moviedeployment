@@ -20,8 +20,9 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.Frontend_URL,
+  process.env.Frontend_URL || "https://movieappps.netlify.app",
 ];
+
 
 app.use(
   cors({
@@ -41,7 +42,11 @@ app.use(
   })
 );
 
-app.options("*", cors());
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
+
 
 
 
@@ -62,9 +67,16 @@ const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
 
-app.use(express.static(path.join(__dirname+'/frontend/dist')))
-app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,'frontend','dist','index.html'))
-})
+app.get("/", (req, res) => {
+  res.status(200).send("API is running...");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(500).json({
+    message: err.message || "Internal Server Error",
+  });
+});
+
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
