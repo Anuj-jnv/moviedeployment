@@ -25,8 +25,12 @@ app.use(
       process.env.Frontend_URL,
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+
 
 
 // middlewares
