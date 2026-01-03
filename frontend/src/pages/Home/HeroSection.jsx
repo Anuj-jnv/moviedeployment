@@ -6,11 +6,11 @@ const HeroSection = () => {
   
   return (
     <section className="relative bg-gray-800 text-white py-20 px-4">
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="max-w-7xl mx-auto text-center mt-8">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
           Discover Amazing Movies
         </h1>
-        <p className="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto">
+        <p className="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto mt-4">
           Explore our vast collection of movies, from classics to the latest releases.
           Find your next favorite film and enjoy an unparalleled viewing experience.
         </p>

@@ -16,7 +16,6 @@ import ErrorState from "../../components/common/ErrorState";
 const MovieDetails = () => {
   const { id: movieId } = useParams();
   const location = useLocation();
-
   const backPath = location.state?.from || "/";
 
   const [rating, setRating] = useState(0);
@@ -47,22 +46,21 @@ const MovieDetails = () => {
   };
 
   return (
-    <div className="bg-gray-900 min-h-screen text-white">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
 
         {/* BACK BUTTON */}
         <Link
           to={backPath}
-          className="inline-flex items-center text-teal-400
-                     font-medium hover:underline mb-10"
+          className="inline-flex items-center gap-2 text-teal-400 font-medium hover:underline mb-8"
         >
-          <MoveLeftIcon className="mr-2" />
+          <MoveLeftIcon size={20} />
           Back
         </Link>
 
         {/* LOADING */}
         {isLoading && (
-          <div className="space-y-10">
+          <div className="space-y-8">
             <Skeleton variant="rectangle" height="420px" />
             <Skeleton variant="text" lines={4} />
           </div>
@@ -80,55 +78,84 @@ const MovieDetails = () => {
         {/* CONTENT */}
         {movie && !isLoading && !error && (
           <>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
 
-              {/* LEFT */}
+              {/* LEFT: POSTER */}
               <div className="lg:col-span-4">
-                <div className="sticky top-24">
-                  <img
-                    src={movie.image}
-                    alt={movie.name}
-                    className="rounded-2xl shadow-2xl"
-                  />
+                <div className="lg:sticky lg:top-24">
+                  <div
+                    className="
+                      relative w-full
+                      aspect-[2/3]
+                      max-h-[520px]
+                      sm:max-h-[560px]
+                      lg:max-h-[600px]
+                      overflow-hidden
+                      rounded-2xl
+                      shadow-2xl
+                      mx-auto
+                    "
+                  >
+                    <img
+                      src={movie.image}
+                      alt={movie.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* RIGHT */}
-              <div className="lg:col-span-8 space-y-10">
-                <h1 className="text-4xl font-extrabold">
+              {/* RIGHT: DETAILS */}
+              <div className="lg:col-span-8 space-y-8">
+
+                <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
                   {movie.name}
                 </h1>
 
-                <p className="text-gray-300 text-lg">
+                <p className="text-gray-300 text-base md:text-lg leading-relaxed">
                   {movie.detail}
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* INFO CARDS */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
                   <div className="bg-gray-800 p-6 rounded-xl">
-                    <p className="text-sm text-gray-400">Release Year</p>
-                    <p className="text-3xl font-bold">{movie.year}</p>
+                    <p className="text-sm text-gray-400 mb-1">
+                      Release Year
+                    </p>
+                    <p className="text-3xl font-bold">
+                      {movie.year}
+                    </p>
                   </div>
 
                   <div className="bg-gray-800 p-6 rounded-xl">
-                    <p className="text-sm text-gray-400 mb-3">Cast</p>
-                    <div className="grid grid-cols-2 gap-2">
+                    <p className="text-sm text-gray-400 mb-3">
+                      Cast
+                    </p>
+                    <div className="flex flex-wrap gap-2">
                       {movie.cast.map((actor, idx) => (
                         <span
                           key={idx}
-                          className="bg-gray-700 rounded-md
-                                     px-3 py-1 text-sm"
+                          className="
+                            bg-gray-700
+                            px-3 py-1
+                            rounded-md
+                            text-sm
+                            whitespace-nowrap
+                          "
                         >
                           {actor}
                         </span>
                       ))}
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
 
             {/* REVIEWS */}
-            <div className="mt-16">
+            <div className="mt-14 md:mt-16">
               <MovieTabs
                 submitHandler={submitHandler}
                 rating={rating}
@@ -136,6 +163,8 @@ const MovieDetails = () => {
                 comment={comment}
                 setComment={setComment}
                 movie={movie}
+                loadingMovieReview={loadingMovieReview}
+                userInfo={userInfo}
               />
             </div>
           </>

@@ -3,6 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import path from "path";
+import cors from "cors";
 
 // Files
 import connectDB from "./config/db.js";
@@ -16,6 +17,17 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      process.env.Frontend_URL,
+    ],
+    credentials: true,
+  })
+);
+
 
 // middlewares
 app.use(express.json());
