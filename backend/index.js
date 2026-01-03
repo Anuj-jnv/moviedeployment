@@ -20,7 +20,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.Frontend_URL || "https://movieappps.netlify.app",
+  "https://movieappps.netlify.app",
 ];
 
 app.use((req, res, next) => {
@@ -28,29 +28,27 @@ app.use((req, res, next) => {
   next();
 });
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (browser direct hit, health checks, Safari)
+    if (!origin) {
+      return callback(null, true);
+    }
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (Postman, server-to-server)
-      if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
 
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // 🔴 THIS SETS access-control-allow-credentials:true
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-app.options("*", cors({
-  origin: allowedOrigins,
+    console.error("Blocked by CORS:", origin);
+    return callback(null, false);
+  },
   credentials: true,
-}));
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 
 
