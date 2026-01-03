@@ -6,9 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "fullstack": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "backend": "nodemon backend/index.js",
-    "frontend": "cd frontend && npm run dev",
+    "start": "node index.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
