@@ -6,7 +6,7 @@ A **production‑grade full‑stack MERN application** designed for discovering,
 
 ## 🎥 Project Walkthrough (Introductory Videos)
 
-To help interviewers quickly understand both perspectives of the application, separate walkthrough videos are provided for **Users** and **Administrators**.
+To  quickly understand both perspectives of the application, separate walkthrough videos are provided for **Users** and **Administrators**.
 
 ### 👤 User Walkthrough
 
@@ -19,8 +19,6 @@ To help interviewers quickly understand both perspectives of the application, se
 * ▶️ **Admin Dashboard Demo:**
   [https://res.cloudinary.com/dyqa7ohun/video/upload/v1767506727/Introductory_Video-_Admin_puwxjr.mkv](https://res.cloudinary.com/dyqa7ohun/video/upload/v1767506727/Introductory_Video-_Admin_puwxjr.mkv)
 * Covers authentication, role-based access, movie & genre management, and comment moderation.
-
-> These short videos are designed for fast evaluation during interviews and showcase real application workflows.
 
 ---
 
@@ -103,7 +101,7 @@ To help interviewers quickly understand both perspectives of the application, se
 ### 🛠️ Admin Dashboard
 
 ![Admin Dashboard Screenshot](Project_Screenshots/Dashboard1.png)
-## For Create and update Movies , Genres and Comments .
+## To Create and update Movies , Genres and Comments .
 ![Admin Dashboard Screenshot](Project_Screenshots/Dashboard2.png)
 
 ### 🎥 Movie Details & Filtering
@@ -132,8 +130,8 @@ To help interviewers quickly understand both perspectives of the application, se
 ### Clone the Repository
 
 ```
-git clone https://github.com/Anuj-jnv/MovieAppDeploy.git
-cd MovieAppDeploy
+git clone https://github.com/Anuj-jnv/moviedeployment.git
+cd MovieAppDeployment
 ```
 
 ### Backend Setup
