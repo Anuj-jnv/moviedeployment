@@ -98,7 +98,7 @@ To help interviewers quickly understand both perspectives of the application, se
 
 ### 🏠 Homepage
 
-![Homepage Screenshot](frontend/src/project_images/Homepage.png)
+![Homepage Screenshot](Project_Screenshots/Homepage.pdf)
 
 ### 🛠️ Admin Dashboard
 
