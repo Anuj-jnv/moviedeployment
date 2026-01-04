@@ -98,15 +98,17 @@ To help interviewers quickly understand both perspectives of the application, se
 
 ### 🏠 Homepage
 
-![Homepage Screenshot](Project_Screenshots/Homepage.pdf)
+![Homepage Screenshot](Project_Screenshots/Homepage.png)
 
 ### 🛠️ Admin Dashboard
 
-![Admin Dashboard Screenshot](frontend/src/project_images/Admin_dahboard.png)
+![Admin Dashboard Screenshot](Project_Screenshots/Dashboard1.png)
+## For Create and update Movies , Genres and Comments .
+![Admin Dashboard Screenshot](Project_Screenshots/Dashboard2.png)
 
 ### 🎥 Movie Details & Filtering
 
-![Movie Details Screenshot](frontend/src/project_images/Filtering_page.png)
+![Movie Details Screenshot](Project_Screenshots/Movies_Filter.png)
 
 ---
 
